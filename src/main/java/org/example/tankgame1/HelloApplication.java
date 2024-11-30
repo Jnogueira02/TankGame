@@ -37,7 +37,8 @@ public class HelloApplication extends Application {
         // Create walls
         walls.add(wallFactory.createWall(100, 45, 8, 100));
         walls.add(wallFactory.createWall(230, 50, 100, 8));
-        GameEnvironment gameEnvironment = new GameEnvironment(walls, root);
+        GameEnvironment.getInstance().initialize(walls, root);
+        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
         for(Wall wall: walls){
             root.getChildren().add(wall.getRectangle());
         }

@@ -12,7 +12,6 @@ public class Tank {
     private double xPos, yPos;
     private ImageView imageView;
     private Image tankUp, tankDown, tankLeft, tankRight;
-    private Image currentImage;
     private Direction direction = Direction.UP;
     private GameEnvironment gameEnvironment;
 
@@ -31,9 +30,6 @@ public class Tank {
         imageView = new ImageView(tankUp);
         imageView.setX(xPos);
         imageView.setY(yPos);
-//        currentImage = tankUp;
-//        double originalWidth = currentImage.getWidth();
-//        double originalHeight = currentImage.getHeight();
         imageView.setFitWidth(40);
         imageView.setFitHeight(40);
     }
