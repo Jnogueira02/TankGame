@@ -11,15 +11,14 @@ import org.example.tankgame1.Environment.Wall;
 import org.example.tankgame1.Environment.WallFactory;
 import org.example.tankgame1.Missile.Missile;
 import org.example.tankgame1.Missile.MissileFactory;
-import org.example.tankgame1.Tank.Tank;
-import org.example.tankgame1.Tank.TankFactory;
+import org.example.tankgame1.Tank.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HelloApplication extends Application {
-    private TankFactory tankFactory = new TankFactory();
+    private TankFactory tankFactory;
     private MissileFactory missileFactory = new MissileFactory();
     private WallFactory wallFactory = new WallFactory();
     private List<Wall> walls = new ArrayList<>();
@@ -44,18 +43,23 @@ public class HelloApplication extends Application {
         }
 
         // Create user tank
-        Tank tank = tankFactory.createTank(180, 150, gameEnvironment);
-        root.getChildren().add(tank.getImageView());
+        tankFactory = TankFactory.getInstance();
+        UserTank userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
+        root.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
+
+        // Create the enemy tanks
+        EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
+        root.getChildren().add(enemyTank1.getImageView());
 
         // Handle movement of tank
         scene.setOnKeyPressed((KeyEvent event) -> {
             switch (event.getCode()) {
-                case UP, W -> tank.moveUp();
-                case DOWN, S -> tank.moveDown();
-                case LEFT, A -> tank.moveLeft();
-                case RIGHT, D -> tank.moveRight();
+                case UP, W -> userTank.moveUp();
+                case DOWN, S -> userTank.moveDown();
+                case LEFT, A -> userTank.moveLeft();
+                case RIGHT, D -> userTank.moveRight();
                 case SPACE -> {
-                    Missile missile = missileFactory.createMissile(tank);
+                    Missile missile = missileFactory.createMissile(userTank);
                     root.getChildren().add(missile.getImageView());
 
                     // Continuously move the missile
@@ -73,6 +77,7 @@ public class HelloApplication extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Tank Game");
+        stage.setResizable(false);
         stage.show();
 
     }

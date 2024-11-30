@@ -1,14 +1,12 @@
 package org.example.tankgame1.Missile;
 
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import org.example.tankgame1.Direction;
 import org.example.tankgame1.Environment.Explosion;
+import org.example.tankgame1.Environment.ExplosionFactory;
 import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Environment.Wall;
-import org.example.tankgame1.Tank.Tank;
+import org.example.tankgame1.Tank.UserTank;
 
 public class Missile {
     private final double SPEED = 10;
@@ -16,8 +14,9 @@ public class Missile {
     private ImageView imageView;
     private MissileStrategy strategy;
     private GameEnvironment gameEnvironment;
+    private ExplosionFactory explosionFactory;
 
-    public Missile(Tank tank) {
+    public Missile(UserTank tank) {
         this.xPos = tank.getXPos();
         this.yPos = tank.getYPos();
         this.gameEnvironment = tank.getGameEnvironment();
@@ -34,6 +33,9 @@ public class Missile {
         }
 
         strategy.setMissileImage(imageView);
+
+        // Initialize explosion factory (POSSIBLE REFACTOR to singleton)
+        this.explosionFactory = new ExplosionFactory();
     }
 
     public void move() {
@@ -65,7 +67,8 @@ public class Missile {
     }
 
     private void triggerExplosion(){
-        Explosion explosion = new Explosion(xPos, yPos);
+//        Explosion explosion = new Explosion(xPos, yPos, imageCache);
+        Explosion explosion = explosionFactory.createExplosion(xPos, yPos);
         gameEnvironment.getGamePane().getChildren().add(explosion.getImageView());
         explosion.play();
     }

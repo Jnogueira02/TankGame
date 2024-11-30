@@ -3,11 +3,10 @@ package org.example.tankgame1.Tank;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import org.example.tankgame1.Direction;
 import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Environment.Wall;
 
-public class Tank {
+public abstract class Tank {
     private final double SPEED = 5;
     private double xPos, yPos;
     private ImageView imageView;
@@ -15,10 +14,10 @@ public class Tank {
     private Direction direction = Direction.UP;
     private GameEnvironment gameEnvironment;
 
-    public Tank(double xPos, double yPos, GameEnvironment gameEnvironment) {
+    public Tank(double xPos, double yPos){
         this.xPos = xPos;
         this.yPos = yPos;
-        this.gameEnvironment = gameEnvironment;
+        this.gameEnvironment = GameEnvironment.getInstance();
 
         // Load the tank images
         tankUp = new Image(getClass().getResource("/images/tankU.gif").toExternalForm());
@@ -106,8 +105,9 @@ public class Tank {
         return true;
     }
 
-
     public GameEnvironment getGameEnvironment() {
         return gameEnvironment;
     }
+
+
 }

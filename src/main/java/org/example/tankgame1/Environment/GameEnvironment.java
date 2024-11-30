@@ -3,6 +3,7 @@ package org.example.tankgame1.Environment;
 import javafx.scene.layout.Pane;
 import java.util.List;
 
+// Singleton Class
 public class GameEnvironment {
     private List<Wall> walls;
     private Pane gamePane;

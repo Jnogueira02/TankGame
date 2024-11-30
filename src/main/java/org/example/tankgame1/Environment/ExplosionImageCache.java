@@ -5,18 +5,19 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImageCache {
-    private static ImageCache instance;
+// Singleton Class
+public class ExplosionImageCache {
+    private static ExplosionImageCache instance;
     private Map<String, Image> imageMap;
 
-    private ImageCache() {
+    private ExplosionImageCache() {
         imageMap = new HashMap<>();
         loadImages();
     }
 
-    public static ImageCache getInstance() {
+    public static ExplosionImageCache getInstance() {
         if (instance == null) {
-            instance = new ImageCache();
+            instance = new ExplosionImageCache();
         }
         return instance;
     }

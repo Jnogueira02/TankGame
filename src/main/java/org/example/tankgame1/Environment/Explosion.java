@@ -10,15 +10,14 @@ public class Explosion {
     private ImageView imageView;
     private Timeline animation;
 
-    public Explosion(double xPos, double yPos){
+    public Explosion(double xPos, double yPos, ExplosionImageCache imageCache){
         imageView = new ImageView();
         imageView.setX(xPos);
         imageView.setY(yPos);
-        setupAnimation();
+        setupAnimation(imageCache);
     }
 
-    private void setupAnimation(){
-        ImageCache imageCache = ImageCache.getInstance();
+    private void setupAnimation(ExplosionImageCache imageCache){
         Image[] frames = new Image[11];
         for(int i = 0; i <= 10; i++){
             frames[i] = imageCache.getImage("/images/" + i + ".gif");
