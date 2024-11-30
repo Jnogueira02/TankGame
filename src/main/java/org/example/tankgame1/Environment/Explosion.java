@@ -18,19 +18,11 @@ public class Explosion {
     }
 
     private void setupAnimation(){
-        Image[] frames = {
-            new Image(getClass().getResource("/images/0.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/1.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/2.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/3.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/4.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/5.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/6.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/7.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/8.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/9.gif").toExternalForm()),
-            new Image(getClass().getResource("/images/10.gif").toExternalForm()),
-        };
+        ImageCache imageCache = ImageCache.getInstance();
+        Image[] frames = new Image[11];
+        for(int i = 0; i <= 10; i++){
+            frames[i] = imageCache.getImage("/images/" + i + ".gif");
+        }
 
         animation = new Timeline();
         for(int i = 0; i < frames.length; i++){
