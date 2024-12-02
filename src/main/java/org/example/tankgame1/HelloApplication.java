@@ -36,8 +36,7 @@ public class HelloApplication extends Application {
         // Create walls
         walls.add(wallFactory.createWall(100, 45, 8, 100));
         walls.add(wallFactory.createWall(230, 50, 100, 8));
-        GameEnvironment.getInstance().initialize(walls, root);
-        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
+//        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
         for(Wall wall: walls){
             root.getChildren().add(wall.getRectangle());
         }
@@ -47,9 +46,21 @@ public class HelloApplication extends Application {
         UserTank userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
         root.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
 
+        // Initialize the game environment
+        GameEnvironment.getInstance().initialize(walls, root, userTank);
+
         // Create the enemy tanks
         EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
         root.getChildren().add(enemyTank1.getImageView());
+
+        // Animation Timer for game logic
+        AnimationTimer gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                enemyTank1.move(); // Move the enemy tank on each frame
+            }
+        };
+        gameLoop.start();
 
         // Handle movement of tank
         scene.setOnKeyPressed((KeyEvent event) -> {

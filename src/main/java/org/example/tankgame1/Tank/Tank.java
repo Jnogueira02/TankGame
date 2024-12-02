@@ -7,7 +7,7 @@ import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Environment.Wall;
 
 public abstract class Tank {
-    private final double SPEED = 5;
+    public final double SPEED = 5;
     private double xPos, yPos;
     private ImageView imageView;
     private Image tankUp, tankDown, tankLeft, tankRight;
@@ -94,7 +94,7 @@ public abstract class Tank {
         imageView.setY(yPos);
     }
 
-    private boolean checkCollision(double newX, double newY) {
+    public boolean checkCollision(double newX, double newY) {
         Rectangle tankBounds = new Rectangle(newX, newY, imageView.getFitWidth(), imageView.getFitHeight());
         for(Wall wall : gameEnvironment.getWalls()) {
             if (tankBounds.intersects(wall.getRectangle().getX(), wall.getRectangle().getY(),
@@ -108,6 +108,8 @@ public abstract class Tank {
     public GameEnvironment getGameEnvironment() {
         return gameEnvironment;
     }
-
+    public UserTank getUserTank(){
+        return gameEnvironment.getUserTank();
+    }
 
 }
