@@ -38,9 +38,10 @@ public class HelloApplication extends Application {
         walls.add(wallFactory.createWall(100, 45, 8, 100));
         walls.add(wallFactory.createWall(230, 50, 100, 8));
 //        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
-        for(Wall wall: walls){
-            root.getChildren().add(wall.getRectangle());
-        }
+        walls.forEach(wall -> root.getChildren().add(wall.getRectangle()));
+//        for(Wall wall: walls){
+//            root.getChildren().add(wall.getRectangle());
+//        }
 
         // Create user tank
         tankFactory = TankFactory.getInstance();
@@ -65,36 +66,13 @@ public class HelloApplication extends Application {
             @Override
             public void handle(long now) {
                 enemyTank1.move();
-                if (shouldEnemyTankShoot(now)) {
-                    Missile missile = missileFactory.createMissile(enemyTank1);
-                    root.getChildren().add(missile.getImageView());
-                }
+                enemyTank1.attempToShoot();
             }
         };
         gameLoop.start();
 
-        // Handle movement of tank
-        scene.setOnKeyPressed((KeyEvent event) -> {
-            switch (event.getCode()) {
-                case UP, W -> userTank.moveUp();
-                case DOWN, S -> userTank.moveDown();
-                case LEFT, A -> userTank.moveLeft();
-                case RIGHT, D -> userTank.moveRight();
-                case SPACE -> {
-                    Missile missile = missileFactory.createMissile(userTank);
-                    root.getChildren().add(missile.getImageView());
-
-                    // Continuously move the missile
-                    AnimationTimer missileTimer = new AnimationTimer() {
-                        @Override
-                        public void handle(long now) {
-                            missile.move();
-                        }
-                    };
-                    missileTimer.start();
-                }
-            }
-        });
+        // Handle user input
+        scene.setOnKeyPressed(event -> handlePlayerInput(event, userTank, root));
 
 
         stage.setScene(scene);
@@ -102,6 +80,28 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
         stage.show();
 
+    }
+
+    private void handlePlayerInput(KeyEvent event, UserTank userTank, Pane root){
+        switch (event.getCode()) {
+            case UP, W -> userTank.moveUp();
+            case DOWN, S -> userTank.moveDown();
+            case LEFT, A -> userTank.moveLeft();
+            case RIGHT, D -> userTank.moveRight();
+            case SPACE -> {
+                Missile missile = missileFactory.createMissile(userTank);
+                root.getChildren().add(missile.getImageView());
+
+                // Continuously move the missile
+                AnimationTimer missileTimer = new AnimationTimer() {
+                    @Override
+                    public void handle(long now) {
+                        missile.move();
+                    }
+                };
+                missileTimer.start();
+            }
+        }
     }
 
     public static void main(String[] args) {

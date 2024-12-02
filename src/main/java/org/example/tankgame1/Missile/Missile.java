@@ -14,19 +14,21 @@ public class Missile {
     private double xPos, yPos;
     private ImageView imageView;
     private MissileStrategy strategy;
+    private Tank shooterTank;
     private GameEnvironment gameEnvironment;
     private ExplosionFactory explosionFactory;
 
-    public Missile(UserTank tank) {
-        this.xPos = tank.getXPos();
-        this.yPos = tank.getYPos();
-        this.gameEnvironment = tank.getGameEnvironment();
+    public Missile(Tank shooterTank) {
+        this.shooterTank = shooterTank;
+        this.xPos = shooterTank.getXPos();
+        this.yPos = shooterTank.getYPos();
+        this.gameEnvironment = shooterTank.getGameEnvironment();
         this.imageView = new ImageView();
         imageView.setX(xPos);
         imageView.setY(yPos);
 
         // Strategy setup based on tank's direction
-        switch (tank.getDirection()) {
+        switch (shooterTank.getDirection()) {
             case UP -> strategy = new MissileUpStrategy();
             case DOWN -> strategy = new MissileDownStrategy();
             case LEFT -> strategy = new MissileLeftStrategy();
@@ -70,7 +72,7 @@ public class Missile {
     private boolean checkCollisionWithTank(){
         Rectangle missileBounds = new Rectangle(xPos, yPos, imageView.getFitWidth(), imageView.getFitHeight());
         for (Tank tank : gameEnvironment.getTanks()) {
-            if (tank != shooter && missileBounds.intersects(tank.getImageView().getBoundsInParent())) {
+            if (tank != shooterTank && missileBounds.intersects(tank.getImageView().getBoundsInParent())) {
                 tank.takeDamage();
                 return true;
             }

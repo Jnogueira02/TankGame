@@ -1,12 +1,15 @@
 package org.example.tankgame1.Tank;
 
 import org.example.tankgame1.Environment.GameEnvironment;
+import org.example.tankgame1.Missile.Missile;
 
 public class EnemyTank extends Tank{
     private UserTank userTank;
     private static final double MIN_DISTANCE = 100; // The enemy tank must keep this distance from the player
-    private long timeFromLastDirectionChange = 0;
+    private long lastDirectionChangeTime = 0;
+    private long lastShotTime = 0;
     private static final long DIRECTION_CHANGE_COOLDOWN = 200;
+    private static final long SHOOTING_COOLDOWN = 3000;
 
     public EnemyTank(double xPos, double yPos) {
         super(xPos, yPos);
@@ -15,7 +18,7 @@ public class EnemyTank extends Tank{
 
     public void move() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - timeFromLastDirectionChange < DIRECTION_CHANGE_COOLDOWN) {
+        if (currentTime - lastDirectionChangeTime < DIRECTION_CHANGE_COOLDOWN) {
             return; // Skip the move logic if the cooldown period has not elapsed
         }
 
@@ -34,7 +37,7 @@ public class EnemyTank extends Tank{
             // Too close, choose to wander or stop
             wander();
         }
-        timeFromLastDirectionChange = currentTime;
+        lastDirectionChangeTime = currentTime;
     }
 
     private void moveInDirection(double dx, double dy) {
@@ -74,5 +77,19 @@ public class EnemyTank extends Tank{
                 moveRight();
                 break;
         }
+    }
+
+    public void attempToShoot(){
+        long currentTime = System.currentTimeMillis();
+        if(currentTime - lastShotTime > SHOOTING_COOLDOWN){
+            lastShotTime = currentTime;
+            shoot();
+        }
+    }
+
+    private void shoot(){
+        Missile missile = new Missile(this);
+        getGameEnvironment().getGamePane().getChildren().add(missile.getImageView());
+        missile.move();
     }
 }
