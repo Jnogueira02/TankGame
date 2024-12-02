@@ -90,6 +90,6 @@ public class EnemyTank extends Tank{
     private void shoot(){
         Missile missile = new Missile(this);
         getGameEnvironment().getGamePane().getChildren().add(missile.getImageView());
-        missile.move();
+        getGameEnvironment().addMissile(missile);
     }
 }

@@ -11,6 +11,7 @@ import org.example.tankgame1.Tank.UserTank;
 
 public class Missile {
     private final double SPEED = 10;
+    private boolean isActive;
     private double xPos, yPos;
     private ImageView imageView;
     private MissileStrategy strategy;
@@ -22,6 +23,7 @@ public class Missile {
         this.shooterTank = shooterTank;
         this.xPos = shooterTank.getXPos();
         this.yPos = shooterTank.getYPos();
+        this.isActive = true;
         this.gameEnvironment = shooterTank.getGameEnvironment();
         this.imageView = new ImageView();
         imageView.setX(xPos);
@@ -42,6 +44,10 @@ public class Missile {
     }
 
     public void move() {
+        if(!isActive){
+            return;
+        }
+
         double[] pos = {xPos, yPos};
         strategy.updatePosition(SPEED, pos);
         xPos = pos[0];
@@ -49,6 +55,7 @@ public class Missile {
         if(checkCollisionWithWall() || checkCollisionWithTank()){
             triggerExplosion();
             imageView.setVisible(false);
+            isActive = false;
             return;
         }
         updatePosition();
@@ -85,6 +92,15 @@ public class Missile {
         Explosion explosion = explosionFactory.createExplosion(xPos, yPos);
         gameEnvironment.getGamePane().getChildren().add(explosion.getImageView());
         explosion.play();
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    private boolean isOutOfBounds() {
+        return xPos < 0 || xPos > gameEnvironment.getGamePane().getWidth() ||
+                yPos < 0 || yPos > gameEnvironment.getGamePane().getHeight();
     }
 
     public ImageView getImageView() {

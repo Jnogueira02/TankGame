@@ -67,6 +67,7 @@ public class HelloApplication extends Application {
             public void handle(long now) {
                 enemyTank1.move();
                 enemyTank1.attempToShoot();
+                gameEnvironment.updateMissiles();
             }
         };
         gameLoop.start();

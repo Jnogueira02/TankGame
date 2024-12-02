@@ -1,9 +1,12 @@
 package org.example.tankgame1.Environment;
 
 import javafx.scene.layout.Pane;
+import org.example.tankgame1.Missile.Missile;
 import org.example.tankgame1.Tank.Tank;
 import org.example.tankgame1.Tank.UserTank;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 // Singleton Class
@@ -12,6 +15,7 @@ public class GameEnvironment {
     private Pane gamePane;
     private UserTank userTank;
     private List<Tank> tanks;
+    private List<Missile> activeMissiles = new ArrayList<>();
     private static GameEnvironment instance;
     private static boolean isInitialized = false; // Flag to check if instance is initialized
 
@@ -39,6 +43,26 @@ public class GameEnvironment {
 
     public void addTanks(List<Tank> tanks){
         this.tanks = tanks;
+    }
+
+    public void addMissile(Missile missile) {
+        activeMissiles.add(missile);
+    }
+
+    public List<Missile> getActiveMissiles() {
+        return activeMissiles;
+    }
+
+    public void updateMissiles() {
+        Iterator<Missile> it = activeMissiles.iterator();
+        while (it.hasNext()) {
+            Missile missile = it.next();
+            if (!missile.isActive()) {
+                it.remove();  // Remove the missile if it's no longer active
+            } else {
+                missile.move();
+            }
+        }
     }
 
     public List<Wall> getWalls() {
