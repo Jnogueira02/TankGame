@@ -15,6 +15,7 @@ import org.example.tankgame1.Tank.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HelloApplication extends Application {
@@ -48,16 +49,26 @@ public class HelloApplication extends Application {
 
         // Initialize the game environment
         GameEnvironment.getInstance().initialize(walls, root, userTank);
+        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
 
         // Create the enemy tanks
         EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
         root.getChildren().add(enemyTank1.getImageView());
 
+        // Add list of tanks to the game environment
+        List<Tank> tanks = new ArrayList<>();
+        Collections.addAll(tanks, userTank, enemyTank1);
+        gameEnvironment.addTanks(tanks);
+
         // Animation Timer for game logic
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                enemyTank1.move(); // Move the enemy tank on each frame
+                enemyTank1.move();
+                if (shouldEnemyTankShoot(now)) {
+                    Missile missile = missileFactory.createMissile(enemyTank1);
+                    root.getChildren().add(missile.getImageView());
+                }
             }
         };
         gameLoop.start();

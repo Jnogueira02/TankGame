@@ -1,6 +1,7 @@
 package org.example.tankgame1.Environment;
 
 import javafx.scene.layout.Pane;
+import org.example.tankgame1.Tank.Tank;
 import org.example.tankgame1.Tank.UserTank;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public class GameEnvironment {
     private List<Wall> walls;
     private Pane gamePane;
     private UserTank userTank;
+    private List<Tank> tanks;
     private static GameEnvironment instance;
     private static boolean isInitialized = false; // Flag to check if instance is initialized
 
@@ -35,6 +37,10 @@ public class GameEnvironment {
         }
     }
 
+    public void addTanks(List<Tank> tanks){
+        this.tanks = tanks;
+    }
+
     public List<Wall> getWalls() {
         return walls;
     }
@@ -45,5 +51,9 @@ public class GameEnvironment {
 
     public UserTank getUserTank() {
         return userTank;
+    }
+
+    public List<Tank> getTanks(){
+        return tanks;
     }
 }

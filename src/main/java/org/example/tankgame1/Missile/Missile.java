@@ -6,6 +6,7 @@ import org.example.tankgame1.Environment.Explosion;
 import org.example.tankgame1.Environment.ExplosionFactory;
 import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Environment.Wall;
+import org.example.tankgame1.Tank.Tank;
 import org.example.tankgame1.Tank.UserTank;
 
 public class Missile {
@@ -43,7 +44,7 @@ public class Missile {
         strategy.updatePosition(SPEED, pos);
         xPos = pos[0];
         yPos = pos[1];
-        if(checkCollisionWithWall()){
+        if(checkCollisionWithWall() || checkCollisionWithTank()){
             triggerExplosion();
             imageView.setVisible(false);
             return;
@@ -60,6 +61,17 @@ public class Missile {
         Rectangle missileBounds = new Rectangle(xPos, yPos, imageView.getFitWidth(), imageView.getFitHeight());
         for(Wall wall : gameEnvironment.getWalls()){
             if(missileBounds.intersects(wall.getRectangle().getBoundsInParent())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkCollisionWithTank(){
+        Rectangle missileBounds = new Rectangle(xPos, yPos, imageView.getFitWidth(), imageView.getFitHeight());
+        for (Tank tank : gameEnvironment.getTanks()) {
+            if (tank != shooter && missileBounds.intersects(tank.getImageView().getBoundsInParent())) {
+                tank.takeDamage();
                 return true;
             }
         }

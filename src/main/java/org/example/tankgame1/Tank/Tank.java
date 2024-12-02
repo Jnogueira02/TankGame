@@ -12,6 +12,7 @@ public abstract class Tank {
     private ImageView imageView;
     private Image tankUp, tankDown, tankLeft, tankRight;
     private Direction direction = Direction.UP;
+    private int health = 3;
     private GameEnvironment gameEnvironment;
 
     public Tank(double xPos, double yPos){
@@ -47,6 +48,14 @@ public abstract class Tank {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public GameEnvironment getGameEnvironment() {
+        return gameEnvironment;
+    }
+
+    public UserTank getUserTank(){
+        return gameEnvironment.getUserTank();
     }
 
     public void moveUp(){
@@ -105,11 +114,17 @@ public abstract class Tank {
         return true;
     }
 
-    public GameEnvironment getGameEnvironment() {
-        return gameEnvironment;
+    // When hit by missile
+    public void takeDamage(){
+        health--;
+        if(health == 0)
+            destroy();
     }
-    public UserTank getUserTank(){
-        return gameEnvironment.getUserTank();
+
+    // Destroy tank
+    private void destroy(){
+        imageView.setVisible(false); // REMOVE FROM PANE!!!!!!!!!!
+//        gameEnvironment.getGamePane().remove
     }
 
 }
