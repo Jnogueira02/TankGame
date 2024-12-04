@@ -29,4 +29,14 @@ public class ImageViewFactory {
 
         return imageView;
     }
+
+    public ImageView createImageView(Image image, double xPos, double yPos, double width, double height){
+        ImageView imageView = new ImageView(image);
+        imageView.setX(xPos);
+        imageView.setY(yPos);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+
+        return imageView;
+    }
 }

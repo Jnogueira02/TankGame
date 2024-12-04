@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Environment.Image.ImageFactory;
+import org.example.tankgame1.Environment.Image.ImageViewFactory;
 import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
 
@@ -12,6 +13,7 @@ public abstract class Tank {
     public final double SPEED = 5;
     private double xPos, yPos;
     private final ImageView imageView;
+    private final ImageViewFactory imageViewFactory;
     private final Image tankUp, tankDown, tankLeft, tankRight;
     private Direction direction = Direction.UP;
     private final double height = 40;
@@ -31,11 +33,8 @@ public abstract class Tank {
         tankRight = imageFactory.createImage("/images/tankR.gif");
 
         // Initialize the ImageView
-        imageView = new ImageView(tankUp);
-        imageView.setX(xPos);
-        imageView.setY(yPos);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
+        imageViewFactory = ImageViewFactory.getInstance();
+        imageView = imageViewFactory.createImageView(tankUp, xPos, yPos, width, height);
     }
 
     public ImageView getImageView() {
