@@ -154,9 +154,13 @@ public abstract class Tank {
             health++;
     }
 
+    public void setHealth(double health){
+        this.health = health;
+    }
+
 
     // Destroy tank
-    private void destroy(){
+    public void destroy(){
         gameEnvironment.getChildren().remove(imageView);
         gameEnvironment.removeTank(this);
         if(this instanceof EnemyTank){

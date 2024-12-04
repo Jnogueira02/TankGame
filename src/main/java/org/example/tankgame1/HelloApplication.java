@@ -37,10 +37,11 @@ public class HelloApplication extends Application {
         gameArena.setPrefSize(800, 400);
         gameArena.setStyle("-fx-background-color: darkseagreen;");
         root.setCenter(gameArena);
-        root.setStyle("-fx-background-color: white;");
+
+        //
+        healthBar = new HealthBar();
 
 
-        Scene scene = new Scene(root, 1000, 500);
 
         // Create walls
         walls.add(wallFactory.createWall(100, 45, 8, 100));
@@ -51,6 +52,8 @@ public class HelloApplication extends Application {
         TankFactory tankFactory = TankFactory.getInstance();
         userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
         gameArena.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
+        userTank.addHealthObserver(healthBar);
+        root.setTop(healthBar.getProgressBar());
 
         // Initialize missile factory
         missileFactory = MissileFactory.getInstance();
@@ -89,6 +92,7 @@ public class HelloApplication extends Application {
         };
         gameLoop.start();
 
+        Scene scene = new Scene(root, 1000, 500);
         // Handle user input
         scene.setOnKeyPressed(event -> handlePlayerInput(event, userTank, gameArena));
 

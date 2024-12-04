@@ -4,11 +4,13 @@ import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
 
 public class HealthBar implements HealthObserver{
-    private ProgressBar progressBar;
+    private final ProgressBar progressBar;
 
     public HealthBar() {
         progressBar = new ProgressBar();
         progressBar.setPrefWidth(300);
+        progressBar.setProgress(1);
+        progressBar.setStyle("-fx-background-color: red;");
     }
 
     @Override

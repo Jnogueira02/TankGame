@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class UserTank extends Tank implements HealthObservable {
-    private List<HealthObserver> observers = new ArrayList<>();
+    private final List<HealthObserver> observers = new ArrayList<>();
     public UserTank(double xPos, double yPos) {
         super(xPos, yPos);
     }
@@ -21,6 +21,18 @@ public class UserTank extends Tank implements HealthObservable {
     @Override
     public void removeHealthObserver(HealthObserver observer) {
         observers.remove(observer);
+    }
+
+    @Override
+    public void takeDamage(){
+        super.takeDamage();
+        notifyHealthObservers();
+    }
+
+    @Override
+    public void repair(){
+        super.repair();
+        notifyHealthObservers();
     }
 
     @Override
