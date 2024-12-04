@@ -1,10 +1,18 @@
 package org.example.tankgame1.Environment.Explosion;
 
 public class ExplosionFactory {
-    private ExplosionImageCache imageCache;
+    private final ExplosionImageCache imageCache;
+    private static ExplosionFactory instance;
 
-    public ExplosionFactory() {
+    private ExplosionFactory() {
         this.imageCache = ExplosionImageCache.getInstance();
+    }
+
+    public static ExplosionFactory getInstance(){
+        if(instance == null){
+            return new ExplosionFactory();
+        }
+        return instance;
     }
 
     public Explosion createExplosion(double xPos, double yPos) {

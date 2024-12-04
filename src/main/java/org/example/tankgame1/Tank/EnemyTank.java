@@ -1,18 +1,21 @@
 package org.example.tankgame1.Tank;
 
 import org.example.tankgame1.Missile.Missile;
+import org.example.tankgame1.Missile.MissileFactory;
 
 public class EnemyTank extends Tank{
-    private UserTank userTank;
+    private final UserTank userTank;
     private static final double MIN_DISTANCE = 100; // The enemy tank must keep this distance from the player
     private long lastDirectionChangeTime = 0;
     private long lastShotTime = 0;
     private static final long DIRECTION_CHANGE_COOLDOWN = 200;
     private static final long SHOOTING_COOLDOWN = 3000;
+    private MissileFactory missileFactory;
 
     public EnemyTank(double xPos, double yPos) {
         super(xPos, yPos);
         this.userTank = getUserTank();
+        this.missileFactory = MissileFactory.getInstance();
     }
 
     public void move() {
@@ -45,15 +48,16 @@ public class EnemyTank extends Tank{
 
         // Attempt move if no collision
         if (Math.abs(dx) > Math.abs(dy)) {
-            if (dx > 0 && checkCollision(newX, this.getYPos())) {
+            if (dx > 0 && checkWallCollision(newX, this.getYPos())) {
                 moveRight();
-            } else if (dx < 0 && checkCollision(newX, this.getYPos())) {
+            } else if (dx < 0 && checkWallCollision(newX, this.getYPos())) {
                 moveLeft();
             }
         } else {
-            if (dy > 0 && checkCollision(this.getXPos(), newY)) {
+            if (dy > 0 && checkWallCollision(this.getXPos(), newY)) {
                 moveDown();
-            } else if (dy < 0 && checkCollision(this.getXPos(), newY)) {
+
+            } else if (dy < 0 && checkWallCollision(this.getXPos(), newY)) {
                 moveUp();
             }
         }
@@ -87,8 +91,8 @@ public class EnemyTank extends Tank{
     }
 
     private void shoot(){
-        Missile missile = new Missile(this);
-        getGameEnvironment().getGamePane().getChildren().add(missile.getImageView());
+        Missile missile = missileFactory.createMissile(this);
+        getGameEnvironment().getChildren().add(missile.getImageView());
         getGameEnvironment().addMissile(missile);
     }
 

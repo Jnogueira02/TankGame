@@ -36,10 +36,11 @@ public class Missile {
             case RIGHT -> strategy = new MissileRightStrategy();
         }
 
+        // Set the image for the missile
         strategy.setMissileImage(imageView);
 
-        // Initialize explosion factory (POSSIBLE REFACTOR to singleton)
-        this.explosionFactory = new ExplosionFactory();
+        // Initialize explosion factory
+        this.explosionFactory = ExplosionFactory.getInstance();
     }
 
     public void move() {

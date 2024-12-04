@@ -17,12 +17,11 @@ public abstract class Tank {
     private final double height = 40;
     private final double width = 40;
     private int health = 3;
-    private final GameEnvironment gameEnvironment;
+    private final GameEnvironment gameEnvironment = GameEnvironment.getInstance();
 
     public Tank(double xPos, double yPos){
         this.xPos = xPos;
         this.yPos = yPos;
-        this.gameEnvironment = GameEnvironment.getInstance();
 
         // Load the tank images
         ImageFactory imageFactory = ImageFactory.getInstance();
@@ -65,7 +64,7 @@ public abstract class Tank {
 
     public void moveUp(){
         double newY = yPos - SPEED;
-        if((yPos > 0) && (checkCollision(xPos, newY))) {
+        if((yPos > 0) && (checkWallCollision(xPos, newY))) {
             yPos = newY;
             updatePosition();
         }
@@ -77,7 +76,7 @@ public abstract class Tank {
 
     public void moveDown(){
         double newY = yPos + SPEED;
-        if((yPos < 390) && (checkCollision(xPos, newY))) {
+        if((yPos < 390) && (checkWallCollision(xPos, newY))) {
             yPos = newY;
             updatePosition();
         }
@@ -89,7 +88,7 @@ public abstract class Tank {
 
     public void moveLeft(){
         double newX = xPos - SPEED;
-        if((xPos > 0) && (checkCollision(newX, yPos))) {
+        if((xPos > 0) && (checkWallCollision(newX, yPos))) {
             xPos = newX;
             updatePosition();
         }
@@ -101,7 +100,7 @@ public abstract class Tank {
 
     public void moveRight(){
         double newX = xPos + SPEED;
-        if((xPos < 740) && (checkCollision(newX, yPos))) {
+        if((xPos < 740) && (checkWallCollision(newX, yPos))) {
             xPos = newX;
             updatePosition();
         }
@@ -117,7 +116,7 @@ public abstract class Tank {
         imageView.setY(yPos);
     }
 
-    public boolean checkCollision(double newX, double newY) {
+    public boolean checkWallCollision(double newX, double newY) {
         Rectangle tankBounds = new Rectangle(newX, newY, imageView.getFitWidth(), imageView.getFitHeight());
         for(Wall wall : gameEnvironment.getWalls()) {
             if (tankBounds.intersects(wall.getRectangle().getX(), wall.getRectangle().getY(),
@@ -153,7 +152,7 @@ public abstract class Tank {
 
     // Destroy tank
     private void destroy(){
-        gameEnvironment.getChildren().remove(imageView); //LOD!!!!!!!!!!!!!!!!!!
+        gameEnvironment.getChildren().remove(imageView);
         gameEnvironment.removeTank(this);
         if(this instanceof EnemyTank){
             gameEnvironment.removeEnemyTank((EnemyTank) this);

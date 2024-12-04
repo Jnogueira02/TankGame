@@ -21,7 +21,7 @@ import java.util.List;
 
 public class HelloApplication extends Application {
     private TankFactory tankFactory;
-    private MissileFactory missileFactory = new MissileFactory();
+    private MissileFactory missileFactory;
     private WallFactory wallFactory = new WallFactory();
     private List<Wall> walls = new ArrayList<>();
 
@@ -44,6 +44,9 @@ public class HelloApplication extends Application {
         tankFactory = TankFactory.getInstance();
         UserTank userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
         root.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
+
+        // Initialize missile factory
+        missileFactory = MissileFactory.getInstance();
 
         // Initialize the game environment
         GameEnvironment.getInstance().initialize(walls, root, userTank);
