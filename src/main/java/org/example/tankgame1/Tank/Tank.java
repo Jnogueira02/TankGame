@@ -25,7 +25,7 @@ public abstract class Tank {
         this.gameEnvironment = GameEnvironment.getInstance();
 
         // Load the tank images
-        ImageFactory imageFactory = new ImageFactory();
+        ImageFactory imageFactory = ImageFactory.getInstance();
         tankUp = imageFactory.createImage("/images/tankU.gif");
         tankDown = imageFactory.createImage("/images/tankD.gif");
         tankLeft = imageFactory.createImage("/images/tankL.gif");

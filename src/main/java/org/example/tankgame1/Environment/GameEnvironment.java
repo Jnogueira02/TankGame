@@ -21,8 +21,8 @@ public class GameEnvironment {
     private UserTank userTank;
     private List<Tank> tanks;
     private List<EnemyTank> enemyTanks;
-    private List<Missile> activeMissiles = new ArrayList<>();
-    private List<MedPack> medPacks = new ArrayList<>();
+    private final List<Missile> activeMissiles = new ArrayList<>();
+    private final List<MedPack> medPacks = new ArrayList<>();
     private static GameEnvironment instance;
     private static boolean isInitialized = false; // Flag to check if instance is initialized
 

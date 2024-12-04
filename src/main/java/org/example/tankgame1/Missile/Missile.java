@@ -14,9 +14,9 @@ public class Missile {
     private double xPos, yPos;
     private final ImageView imageView;
     private MissileStrategy strategy;
-    private Tank shooterTank;
-    private GameEnvironment gameEnvironment;
-    private ExplosionFactory explosionFactory;
+    private final Tank shooterTank;
+    private final GameEnvironment gameEnvironment;
+    private final ExplosionFactory explosionFactory;
 
     public Missile(Tank shooterTank) {
         this.shooterTank = shooterTank;
