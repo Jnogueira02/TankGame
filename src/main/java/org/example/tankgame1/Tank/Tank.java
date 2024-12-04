@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import org.example.tankgame1.Environment.GameEnvironment;
-import org.example.tankgame1.Environment.ImageFactory;
+import org.example.tankgame1.Environment.Image.ImageFactory;
 import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
 
@@ -133,6 +133,7 @@ public abstract class Tank {
             if(tankBounds.intersects(medPack.getXPos(), medPack.getYPos(),
                     medPack.getWidth(), medPack.getHeight())){
                 medPack.applyEffect(this);
+
                 return;
             }
         }

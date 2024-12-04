@@ -1,7 +1,7 @@
 package org.example.tankgame1.Environment.Explosion;
 
 import javafx.scene.image.Image;
-import org.example.tankgame1.Environment.ImageFactory;
+import org.example.tankgame1.Environment.Image.ImageFactory;
 
 import java.util.HashMap;
 import java.util.Map;

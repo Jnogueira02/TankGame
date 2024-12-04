@@ -1,4 +1,4 @@
-package org.example.tankgame1.Environment;
+package org.example.tankgame1.Environment.Image;
 
 import javafx.scene.image.Image;
 
