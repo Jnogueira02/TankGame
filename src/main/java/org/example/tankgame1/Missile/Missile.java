@@ -2,18 +2,17 @@ package org.example.tankgame1.Missile;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import org.example.tankgame1.Environment.Explosion;
-import org.example.tankgame1.Environment.ExplosionFactory;
+import org.example.tankgame1.Environment.Explosion.Explosion;
+import org.example.tankgame1.Environment.Explosion.ExplosionFactory;
 import org.example.tankgame1.Environment.GameEnvironment;
-import org.example.tankgame1.Environment.Wall;
+import org.example.tankgame1.Environment.Wall.Wall;
 import org.example.tankgame1.Tank.Tank;
-import org.example.tankgame1.Tank.UserTank;
 
 public class Missile {
     private final double SPEED = 10;
     private boolean isActive;
     private double xPos, yPos;
-    private ImageView imageView;
+    private final ImageView imageView;
     private MissileStrategy strategy;
     private Tank shooterTank;
     private GameEnvironment gameEnvironment;
@@ -88,7 +87,6 @@ public class Missile {
     }
 
     private void triggerExplosion(){
-//        Explosion explosion = new Explosion(xPos, yPos, imageCache);
         Explosion explosion = explosionFactory.createExplosion(xPos, yPos);
         gameEnvironment.getGamePane().getChildren().add(explosion.getImageView());
         explosion.play();

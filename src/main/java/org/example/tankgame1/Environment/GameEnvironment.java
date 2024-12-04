@@ -1,7 +1,10 @@
 package org.example.tankgame1.Environment;
 
 import javafx.scene.layout.Pane;
+import org.example.tankgame1.Environment.MedPack.MedPack;
+import org.example.tankgame1.Environment.Wall.Wall;
 import org.example.tankgame1.Missile.Missile;
+import org.example.tankgame1.Tank.EnemyTank;
 import org.example.tankgame1.Tank.Tank;
 import org.example.tankgame1.Tank.UserTank;
 
@@ -15,7 +18,9 @@ public class GameEnvironment {
     private Pane gamePane;
     private UserTank userTank;
     private List<Tank> tanks;
+    private List<EnemyTank> enemyTanks;
     private List<Missile> activeMissiles = new ArrayList<>();
+    private List<MedPack> medPacks = new ArrayList<>();
     private static GameEnvironment instance;
     private static boolean isInitialized = false; // Flag to check if instance is initialized
 
@@ -44,6 +49,9 @@ public class GameEnvironment {
     public void addTanks(List<Tank> tanks){
         this.tanks = tanks;
     }
+    public void addEnemyTanks(List<EnemyTank> enemyTanks){
+        this.enemyTanks = enemyTanks;
+    }
 
     public void addMissile(Missile missile) {
         activeMissiles.add(missile);
@@ -63,6 +71,23 @@ public class GameEnvironment {
                 missile.move();
             }
         }
+    }
+
+    public void removeTank(Tank tank){
+        tanks.remove(tank);
+    }
+
+    public void removeEnemyTank(EnemyTank enemyTank){
+        enemyTanks.remove(enemyTank);
+    }
+
+    public void addMedPack(MedPack medPack){
+        medPacks.add(medPack);
+        gamePane.getChildren().add(medPack.getImageView());
+    }
+
+    public List<MedPack> getMedPacks() {
+        return medPacks;
     }
 
     public List<Wall> getWalls() {

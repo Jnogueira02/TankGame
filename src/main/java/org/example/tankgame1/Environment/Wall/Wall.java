@@ -1,4 +1,4 @@
-package org.example.tankgame1.Environment;
+package org.example.tankgame1.Environment.Wall;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

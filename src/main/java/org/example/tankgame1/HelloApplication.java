@@ -7,8 +7,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.example.tankgame1.Environment.GameEnvironment;
-import org.example.tankgame1.Environment.Wall;
-import org.example.tankgame1.Environment.WallFactory;
+import org.example.tankgame1.Environment.MedPack.MedPack;
+import org.example.tankgame1.Environment.Wall.Wall;
+import org.example.tankgame1.Environment.Wall.WallFactory;
 import org.example.tankgame1.Missile.Missile;
 import org.example.tankgame1.Missile.MissileFactory;
 import org.example.tankgame1.Tank.*;
@@ -29,19 +30,15 @@ public class HelloApplication extends Application {
         Pane root = new Pane();
         root.setStyle("-fx-background-color: darkseagreen;");
 
-        stage.setWidth(400);
-        stage.setHeight(240);
+        stage.setWidth(800);
+        stage.setHeight(480);
 
         Scene scene = new Scene(root);
 
         // Create walls
         walls.add(wallFactory.createWall(100, 45, 8, 100));
         walls.add(wallFactory.createWall(230, 50, 100, 8));
-//        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
         walls.forEach(wall -> root.getChildren().add(wall.getRectangle()));
-//        for(Wall wall: walls){
-//            root.getChildren().add(wall.getRectangle());
-//        }
 
         // Create user tank
         tankFactory = TankFactory.getInstance();
@@ -52,22 +49,40 @@ public class HelloApplication extends Application {
         GameEnvironment.getInstance().initialize(walls, root, userTank);
         GameEnvironment gameEnvironment = GameEnvironment.getInstance();
 
-        // Create the enemy tanks
+        // Create the enemy tanks and add them to a list
         EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
         root.getChildren().add(enemyTank1.getImageView());
+        List<EnemyTank> enemyTanks = new ArrayList<>();
+        enemyTanks.add(enemyTank1);
+        gameEnvironment.addEnemyTanks(enemyTanks);
 
         // Add list of tanks to the game environment
         List<Tank> tanks = new ArrayList<>();
         Collections.addAll(tanks, userTank, enemyTank1);
         gameEnvironment.addTanks(tanks);
 
+        // Add MedPacks
+        List<MedPack> medPacks = new ArrayList<>();
+        MedPack medPack = new MedPack(300, 300);
+        gameEnvironment.addMedPack(medPack);
+
         // Animation Timer for game logic
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                enemyTank1.move();
-                enemyTank1.attempToShoot();
-                gameEnvironment.updateMissiles();
+                for(EnemyTank enemyTank: enemyTanks) {
+                    enemyTank.move();
+                    enemyTank.attemptToShoot();
+                    gameEnvironment.updateMissiles();
+                }
+
+                /*for (Tank tank : gameEnvironment.getTanks()) {
+                    for (MedPack medpack : medPacks) {
+                        if (medpack.isActive() && tank.intersects(medpack.getXPos(), medpack.getYPos(), medpack.getImageView().getFitWidth(), medpack.getImageView().getFitHeight())) {
+                            medpack.applyEffect(tank);
+                        }
+                    }
+                }*/
             }
         };
         gameLoop.start();

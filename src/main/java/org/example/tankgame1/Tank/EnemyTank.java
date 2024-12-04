@@ -1,6 +1,5 @@
 package org.example.tankgame1.Tank;
 
-import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Missile.Missile;
 
 public class EnemyTank extends Tank{
@@ -79,7 +78,7 @@ public class EnemyTank extends Tank{
         }
     }
 
-    public void attempToShoot(){
+    public void attemptToShoot(){
         long currentTime = System.currentTimeMillis();
         if(currentTime - lastShotTime > SHOOTING_COOLDOWN){
             lastShotTime = currentTime;
@@ -92,4 +91,5 @@ public class EnemyTank extends Tank{
         getGameEnvironment().getGamePane().getChildren().add(missile.getImageView());
         getGameEnvironment().addMissile(missile);
     }
+
 }
