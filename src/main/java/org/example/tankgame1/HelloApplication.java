@@ -3,6 +3,7 @@ package org.example.tankgame1;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -26,6 +27,8 @@ public class HelloApplication extends Application {
     private MissileFactory missileFactory;
     private final WallFactory wallFactory = new WallFactory();
     private final List<Wall> walls = new ArrayList<>();
+    private Label enemyCount;
+    private List<EnemyTank> enemyTanks;
     private UserTank userTank;
     private HealthBar healthBar;
 
@@ -38,10 +41,13 @@ public class HelloApplication extends Application {
         gameArena.setStyle("-fx-background-color: darkseagreen;");
         root.setCenter(gameArena);
 
-        //
+        // Initialize health bar
         healthBar = new HealthBar();
 
-
+        // Initialize enemy count
+        enemyCount = new Label();
+//        updateEnemyCount();
+        root.setBottom(enemyCount);
 
         // Create walls
         walls.add(wallFactory.createWall(100, 45, 8, 100));
@@ -52,7 +58,7 @@ public class HelloApplication extends Application {
         TankFactory tankFactory = TankFactory.getInstance();
         userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
         gameArena.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
-        userTank.addHealthObserver(healthBar);
+        userTank.addObserver(healthBar);
         root.setTop(healthBar.getProgressBar());
 
         // Initialize missile factory
@@ -65,7 +71,7 @@ public class HelloApplication extends Application {
         // Create the enemy tanks and add them to a list
         EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
         gameArena.getChildren().add(enemyTank1.getImageView());
-        List<EnemyTank> enemyTanks = new ArrayList<>();
+        enemyTanks = new ArrayList<>();
         enemyTanks.add(enemyTank1);
         gameEnvironment.addEnemyTanks(enemyTanks);
 
@@ -126,6 +132,7 @@ public class HelloApplication extends Application {
             }
         }
     }
+
 
     public static void main(String[] args) {
         launch();

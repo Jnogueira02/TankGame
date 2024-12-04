@@ -7,6 +7,8 @@ import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
 import org.example.tankgame1.Missile.Missile;
 import org.example.tankgame1.Tank.EnemyTank;
+import org.example.tankgame1.ObserverPattern.Observable;
+import org.example.tankgame1.ObserverPattern.Observer;
 import org.example.tankgame1.Tank.Tank;
 import org.example.tankgame1.Tank.UserTank;
 
@@ -15,7 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 
 // Singleton Class
-public class GameEnvironment {
+public class GameEnvironment implements Observable {
     private List<Wall> walls;
     private Pane gamePane;
     private UserTank userTank;
@@ -111,5 +113,20 @@ public class GameEnvironment {
 
     public List<Tank> getTanks(){
         return tanks;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+
+    }
+
+    @Override
+    public void notifyObservers() {
+
     }
 }

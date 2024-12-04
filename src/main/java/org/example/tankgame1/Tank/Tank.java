@@ -8,7 +8,6 @@ import org.example.tankgame1.Environment.Image.ImageFactory;
 import org.example.tankgame1.Environment.Image.ImageViewFactory;
 import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
-import org.example.tankgame1.Tank.Health.HealthObservable;
 
 public abstract class Tank {
     public final double SPEED = 5;
@@ -160,7 +159,7 @@ public abstract class Tank {
 
 
     // Destroy tank
-    public void destroy(){
+    private void destroy(){
         gameEnvironment.getChildren().remove(imageView);
         gameEnvironment.removeTank(this);
         if(this instanceof EnemyTank){
