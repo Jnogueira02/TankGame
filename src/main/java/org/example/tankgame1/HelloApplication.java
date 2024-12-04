@@ -20,10 +20,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class HelloApplication extends Application {
-    private TankFactory tankFactory;
     private MissileFactory missileFactory;
-    private WallFactory wallFactory = new WallFactory();
-    private List<Wall> walls = new ArrayList<>();
+    private final WallFactory wallFactory = new WallFactory();
+    private final List<Wall> walls = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -41,7 +40,7 @@ public class HelloApplication extends Application {
         walls.forEach(wall -> root.getChildren().add(wall.getRectangle()));
 
         // Create user tank
-        tankFactory = TankFactory.getInstance();
+        TankFactory tankFactory = TankFactory.getInstance();
         UserTank userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
         root.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
 
@@ -78,14 +77,6 @@ public class HelloApplication extends Application {
                     enemyTank.attemptToShoot();
                     gameEnvironment.updateMissiles();
                 }
-
-                /*for (Tank tank : gameEnvironment.getTanks()) {
-                    for (MedPack medpack : medPacks) {
-                        if (medpack.isActive() && tank.intersects(medpack.getXPos(), medpack.getYPos(), medpack.getImageView().getFitWidth(), medpack.getImageView().getFitHeight())) {
-                            medpack.applyEffect(tank);
-                        }
-                    }
-                }*/
             }
         };
         gameLoop.start();
@@ -101,6 +92,7 @@ public class HelloApplication extends Application {
 
     }
 
+    // Respond to user keystrokes (tank movement and firing missiles)
     private void handlePlayerInput(KeyEvent event, UserTank userTank, Pane root){
         switch (event.getCode()) {
             case UP, W -> userTank.moveUp();

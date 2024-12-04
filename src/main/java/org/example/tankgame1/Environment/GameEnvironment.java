@@ -63,6 +63,7 @@ public class GameEnvironment {
         return activeMissiles;
     }
 
+    // Repeatedly move the enemy missiles across the screen
     public void updateMissiles() {
         Iterator<Missile> it = activeMissiles.iterator();
         while (it.hasNext()) {
