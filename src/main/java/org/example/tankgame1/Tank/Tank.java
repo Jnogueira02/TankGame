@@ -13,7 +13,6 @@ public abstract class Tank {
     public final double SPEED = 5;
     private double xPos, yPos;
     private final ImageView imageView;
-    private final ImageViewFactory imageViewFactory;
     private final Image tankUp, tankDown, tankLeft, tankRight;
     private Direction direction = Direction.UP;
     private final double height = 40;
@@ -33,7 +32,7 @@ public abstract class Tank {
         tankRight = imageFactory.createImage("/images/tankR.gif");
 
         // Initialize the ImageView
-        imageViewFactory = ImageViewFactory.getInstance();
+        ImageViewFactory imageViewFactory = ImageViewFactory.getInstance();
         imageView = imageViewFactory.createImageView(tankUp, xPos, yPos, width, height);
     }
 

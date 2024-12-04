@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import org.example.tankgame1.Environment.Image.ImageViewFactory;
 
 public class Explosion {
     private final ImageView imageView;
