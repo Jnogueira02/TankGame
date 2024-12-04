@@ -4,13 +4,14 @@ public class ExplosionFactory {
     private final ExplosionImageCache imageCache;
     private static ExplosionFactory instance;
 
+    // Singleton Class
     private ExplosionFactory() {
         this.imageCache = ExplosionImageCache.getInstance();
     }
 
     public static ExplosionFactory getInstance(){
         if(instance == null){
-            return new ExplosionFactory();
+            instance = new ExplosionFactory();
         }
         return instance;
     }

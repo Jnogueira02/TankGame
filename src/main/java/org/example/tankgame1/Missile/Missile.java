@@ -43,6 +43,7 @@ public class Missile {
         this.explosionFactory = ExplosionFactory.getInstance();
     }
 
+    // Move the missile (checking for collision with walls and tanks) if the missile is active.
     public void move() {
         if(!isActive){
             return;
@@ -66,6 +67,8 @@ public class Missile {
         imageView.setY(yPos);
     }
 
+    // Maybe combine collisions??????
+    // Return true if a missile collides with a wall, else false
     private boolean checkCollisionWithWall(){
         Rectangle missileBounds = new Rectangle(xPos, yPos, imageView.getFitWidth(), imageView.getFitHeight());
         for(Wall wall : gameEnvironment.getWalls()){
@@ -76,6 +79,7 @@ public class Missile {
         return false;
     }
 
+    // Return true if a missile collides with a tank and give damage to the tank, else false
     private boolean checkCollisionWithTank(){
         Rectangle missileBounds = new Rectangle(xPos, yPos, imageView.getFitWidth(), imageView.getFitHeight());
         for (Tank tank : gameEnvironment.getTanks()) {
@@ -87,19 +91,15 @@ public class Missile {
         return false;
     }
 
+    // Add an explosion to the screen
     private void triggerExplosion(){
         Explosion explosion = explosionFactory.createExplosion(xPos, yPos);
-        gameEnvironment.getGamePane().getChildren().add(explosion.getImageView());
+        gameEnvironment.getChildren().add(explosion.getImageView());
         explosion.play();
     }
 
     public boolean isActive() {
         return isActive;
-    }
-
-    private boolean isOutOfBounds() {
-        return xPos < 0 || xPos > gameEnvironment.getGamePane().getWidth() ||
-                yPos < 0 || yPos > gameEnvironment.getGamePane().getHeight();
     }
 
     public ImageView getImageView() {

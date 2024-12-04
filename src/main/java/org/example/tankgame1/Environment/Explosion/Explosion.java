@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class Explosion {
-    private ImageView imageView;
+    private final ImageView imageView;
     private Timeline animation;
 
     public Explosion(double xPos, double yPos, ExplosionImageCache imageCache){
@@ -17,16 +17,12 @@ public class Explosion {
         setupAnimation(imageCache);
     }
 
+    // Add the growing explosion images to an animation to be played
     private void setupAnimation(ExplosionImageCache imageCache){
-        Image[] frames = new Image[11];
-        for(int i = 0; i <= 10; i++){
-            frames[i] = imageCache.getImage("/images/" + i + ".gif");
-        }
-
         animation = new Timeline();
-        for(int i = 0; i < frames.length; i++){
+        for(int i = 0; i < 11; i++){
             final int index = i;
-            KeyFrame frame = new KeyFrame(Duration.millis(i * 100), e -> imageView.setImage(frames[index]));
+            KeyFrame frame = new KeyFrame(Duration.millis(i * 100), e -> imageView.setImage(imageCache.getImage("/images/" + index + ".gif")));
             animation.getKeyFrames().add(frame);
         }
         animation.setCycleCount(1);
@@ -37,6 +33,7 @@ public class Explosion {
         return imageView;
     }
 
+    // Play and display the growing explosion animation
     public void play(){
         imageView.setVisible(true);
         animation.play();
