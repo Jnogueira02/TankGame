@@ -4,17 +4,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import org.example.tankgame1.Environment.GameEnvironment;
+import org.example.tankgame1.Environment.ImageFactory;
 import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
 
 public abstract class Tank {
     public final double SPEED = 5;
     private double xPos, yPos;
-    private ImageView imageView;
+    private final ImageView imageView;
     private final Image tankUp, tankDown, tankLeft, tankRight;
     private Direction direction = Direction.UP;
+    private final double height = 40;
+    private final double width = 40;
     private int health = 3;
-    private GameEnvironment gameEnvironment;
+    private final GameEnvironment gameEnvironment;
 
     public Tank(double xPos, double yPos){
         this.xPos = xPos;
@@ -22,17 +25,18 @@ public abstract class Tank {
         this.gameEnvironment = GameEnvironment.getInstance();
 
         // Load the tank images
-        tankUp = new Image(getClass().getResource("/images/tankU.gif").toExternalForm());
-        tankDown = new Image(getClass().getResource("/images/tankD.gif").toExternalForm());
-        tankLeft = new Image(getClass().getResource("/images/tankL.gif").toExternalForm());
-        tankRight = new Image(getClass().getResource("/images/tankR.gif").toExternalForm());
+        ImageFactory imageFactory = new ImageFactory();
+        tankUp = imageFactory.createImage("/images/tankU.gif");
+        tankDown = imageFactory.createImage("/images/tankD.gif");
+        tankLeft = imageFactory.createImage("/images/tankL.gif");
+        tankRight = imageFactory.createImage("/images/tankR.gif");
 
         // Initialize the ImageView
         imageView = new ImageView(tankUp);
         imageView.setX(xPos);
         imageView.setY(yPos);
-        imageView.setFitWidth(40);
-        imageView.setFitHeight(40);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
     }
 
     public ImageView getImageView() {
@@ -125,7 +129,7 @@ public abstract class Tank {
     }
 
     public void checkMedPackCollision(double newX, double newY){
-        Rectangle tankBounds = new Rectangle(newX, newY, imageView.getFitWidth(), imageView.getFitHeight());
+        Rectangle tankBounds = new Rectangle(newX, newY, width, height);
         for(MedPack medPack : gameEnvironment.getMedPacks()){
             if(tankBounds.intersects(medPack.getXPos(), medPack.getYPos(),
                     medPack.getWidth(), medPack.getHeight())){
@@ -149,7 +153,7 @@ public abstract class Tank {
 
     // Destroy tank
     private void destroy(){
-        gameEnvironment.getGamePane().getChildren().remove(imageView); //LOD!!!!!!!!!!!!!!!!!!
+        gameEnvironment.getChildren().remove(imageView); //LOD!!!!!!!!!!!!!!!!!!
         gameEnvironment.removeTank(this);
         if(this instanceof EnemyTank){
             gameEnvironment.removeEnemyTank((EnemyTank) this);

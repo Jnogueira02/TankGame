@@ -9,8 +9,8 @@ public class MedPack {
     private ImageView imageView;
     private double xPos;
     private double yPos;
-    private double width;
-    private double height;
+    private double width = 30;
+    private double height = 25;
     private boolean isActive;
 
     public MedPack(double xPos, double yPos) {
@@ -25,8 +25,6 @@ public class MedPack {
         imageView = new ImageView(image);
         imageView.setX(xPos);
         imageView.setY(yPos);
-        width = 30;
-        height = 25;
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
     }

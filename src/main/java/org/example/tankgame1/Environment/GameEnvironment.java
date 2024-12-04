@@ -1,5 +1,7 @@
 package org.example.tankgame1.Environment;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
@@ -96,6 +98,10 @@ public class GameEnvironment {
 
     public Pane getGamePane() {
         return gamePane;
+    }
+
+    public ObservableList<Node> getChildren(){
+        return gamePane.getChildren();
     }
 
     public UserTank getUserTank() {
