@@ -8,6 +8,7 @@ import org.example.tankgame1.Environment.Image.ImageFactory;
 import org.example.tankgame1.Environment.Image.ImageViewFactory;
 import org.example.tankgame1.Environment.MedPack.MedPack;
 import org.example.tankgame1.Environment.Wall.Wall;
+import org.example.tankgame1.Tank.Health.HealthObservable;
 
 public abstract class Tank {
     public final double SPEED = 5;
@@ -17,7 +18,7 @@ public abstract class Tank {
     private Direction direction = Direction.UP;
     private final double height = 40;
     private final double width = 40;
-    private int health = 3;
+    private double health = 3;
     private final GameEnvironment gameEnvironment = GameEnvironment.getInstance();
 
     public Tank(double xPos, double yPos){
@@ -50,6 +51,10 @@ public abstract class Tank {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public double getHealth(){
+        return health;
     }
 
     public GameEnvironment getGameEnvironment() {
@@ -148,6 +153,7 @@ public abstract class Tank {
         if (health < 3)
             health++;
     }
+
 
     // Destroy tank
     private void destroy(){
