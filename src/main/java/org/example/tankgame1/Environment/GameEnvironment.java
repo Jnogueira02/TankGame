@@ -23,7 +23,7 @@ public class GameEnvironment implements Observable {
     private UserTank userTank;
     private List<Tank> tanks;
     private List<EnemyTank> enemyTanks;
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
     private final List<Missile> activeMissiles = new ArrayList<>();
     private final List<MedPack> medPacks = new ArrayList<>();
     private static GameEnvironment instance;
@@ -62,10 +62,6 @@ public class GameEnvironment implements Observable {
         activeMissiles.add(missile);
     }
 
-    public List<Missile> getActiveMissiles() {
-        return activeMissiles;
-    }
-
     // Repeatedly move the enemy missiles across the screen
     public void updateMissiles() {
         Iterator<Missile> it = activeMissiles.iterator();
@@ -87,6 +83,7 @@ public class GameEnvironment implements Observable {
         enemyTanks.remove(enemyTank);
     }
 
+    // Add a MedPack to the gameEnvironment and screen
     public void addMedPack(MedPack medPack){
         medPacks.add(medPack);
         gamePane.getChildren().add(medPack.getImageView());

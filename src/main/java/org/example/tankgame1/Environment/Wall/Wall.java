@@ -4,8 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Wall {
-    private Rectangle rectangle;
+    private final Rectangle rectangle;
 
+    // Create a wall
     public Wall(double xPos, double yPos, double width, double height){
         rectangle = new Rectangle(xPos, yPos, width, height);
         rectangle.setFill(Color.GRAY);

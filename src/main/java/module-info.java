@@ -17,4 +17,6 @@ module org.example.tankgame1 {
     opens org.example.tankgame1.Environment.Wall to javafx.fxml;
     exports org.example.tankgame1.Environment.Image;
     opens org.example.tankgame1.Environment.Image to javafx.fxml;
+    exports org.example.tankgame1.Missile.StrategyPattern;
+    opens org.example.tankgame1.Missile.StrategyPattern to javafx.fxml;
 }

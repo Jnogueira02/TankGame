@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 // Singleton Class
 public class ImageViewFactory {
     private static ImageViewFactory instance;
-    private ImageFactory imageFactory;
+    private final ImageFactory imageFactory;
 
     private ImageViewFactory(){
         imageFactory = ImageFactory.getInstance();
@@ -19,6 +19,7 @@ public class ImageViewFactory {
         return instance;
     }
 
+    // Create and return an ImageView given various inputs (path version)
     public ImageView createImageView(String path, double xPos, double yPos, double width, double height){
         Image image = imageFactory.createImage(path);
         ImageView imageView = new ImageView(image);
@@ -30,6 +31,7 @@ public class ImageViewFactory {
         return imageView;
     }
 
+    // Create and return an ImageView given various inputs (image version)
     public ImageView createImageView(Image image, double xPos, double yPos, double width, double height){
         ImageView imageView = new ImageView(image);
         imageView.setX(xPos);

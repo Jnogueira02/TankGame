@@ -1,8 +1,9 @@
-package org.example.tankgame1.Missile;
+package org.example.tankgame1.Missile.StrategyPattern;
 
 import javafx.scene.image.ImageView;
 import org.example.tankgame1.Environment.Image.ImageFactory;
 
+// Strategy for leftwards missiles
 public class MissileLeftStrategy implements MissileStrategy{
     private final ImageFactory imageFactory = ImageFactory.getInstance();
     @Override

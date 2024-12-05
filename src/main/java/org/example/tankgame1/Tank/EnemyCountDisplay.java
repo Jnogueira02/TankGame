@@ -1,10 +1,11 @@
-package org.example.tankgame1;
+package org.example.tankgame1.Tank;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.ObserverPattern.Observer;
 
+// EnemyCountDisplay implements Observer to update Enemy count label
 public class EnemyCountDisplay implements Observer {
     private final Label displayLabel;
     private final GameEnvironment gameEnvironment;

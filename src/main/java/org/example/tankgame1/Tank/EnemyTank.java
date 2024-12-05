@@ -10,7 +10,7 @@ public class EnemyTank extends Tank{
     private long lastShotTime = 0;
     private static final long DIRECTION_CHANGE_COOLDOWN = 200;
     private static final long SHOOTING_COOLDOWN = 3000;
-    private MissileFactory missileFactory;
+    private final MissileFactory missileFactory;
 
     public EnemyTank(double xPos, double yPos) {
         super(xPos, yPos);
@@ -82,6 +82,7 @@ public class EnemyTank extends Tank{
         }
     }
 
+    // Try to shoot a missile
     public void attemptToShoot(){
         long currentTime = System.currentTimeMillis();
         if(currentTime - lastShotTime > SHOOTING_COOLDOWN){
@@ -90,6 +91,7 @@ public class EnemyTank extends Tank{
         }
     }
 
+    // Shoot a missile
     private void shoot(){
         Missile missile = missileFactory.createMissile(this);
         getGameEnvironment().getChildren().add(missile.getImageView());

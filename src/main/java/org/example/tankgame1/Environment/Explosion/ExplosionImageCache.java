@@ -25,8 +25,8 @@ public class ExplosionImageCache {
         return instance;
     }
 
+    // Load the explosion images into this class once (singleton)
     private void loadImages() {
-        // Load all your images here
         String basePath = "/images/";
         for (int i = 0; i <= 10; i++) {
             String path = basePath + i + ".gif";

@@ -4,7 +4,6 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -20,7 +19,6 @@ import org.example.tankgame1.Tank.Health.HealthBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,39 +27,34 @@ public class HelloApplication extends Application {
     private WallFactory wallFactory;
     private TankFactory tankFactory;
     private final List<Wall> walls = new ArrayList<>();
-    private List<EnemyTank> enemyTanks = new ArrayList<>();
+    private final List<EnemyTank> enemyTanks = new ArrayList<>();
     private UserTank userTank;
-    private HealthBar healthBar;
     private GameEnvironment gameEnvironment;
     private final Pane gameArena = new Pane();
 
     @Override
     public void start(Stage stage) throws IOException {
+        // Create Pane for game
         BorderPane root = new BorderPane();
-
         gameArena.setPrefSize(800, 400);
         gameArena.setStyle("-fx-background-color: darkseagreen;");
         root.setCenter(gameArena);
 
         // Initialize health bar
-        healthBar = new HealthBar();
+        HealthBar healthBar = new HealthBar();
 
         // Initialize enemy count
         Label enemyCountLabel = new Label("Enemies: 6");
         root.setBottom(enemyCountLabel);
-
         new EnemyCountDisplay(enemyCountLabel);
 
         // Create walls
         wallFactory = WallFactory.getInstance();
         initializeWalls();
-        /*walls.add(wallFactory.createWall(100, 45, 8, 100));
-        walls.add(wallFactory.createWall(230, 50, 100, 8));
-        walls.forEach(wall -> gameArena.getChildren().add(wall.getRectangle()));*/
 
         // Create user tank
         tankFactory = TankFactory.getInstance();
-        userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
+        userTank = (UserTank) tankFactory.createTank(TankType.USER,500, 200);
         gameArena.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
         userTank.addObserver(healthBar);
         root.setTop(healthBar.getProgressBar());
@@ -83,9 +76,7 @@ public class HelloApplication extends Application {
         gameEnvironment.addTanks(tanks);
 
         // Add MedPacks
-        List<MedPack> medPacks = new ArrayList<>();
-        MedPack medPack = new MedPack(300, 300);
-        gameEnvironment.addMedPack(medPack);
+        initializeMedPacks();
 
         // Animation Timer for game logic
         AnimationTimer gameLoop = new AnimationTimer() {
@@ -167,6 +158,15 @@ public class HelloApplication extends Application {
         walls.add(wallFactory.createWall(800, 130, 100, 8));
         walls.add(wallFactory.createWall(600, 400, 100, 8));
         walls.forEach(wall -> gameArena.getChildren().add(wall.getRectangle()));
+    }
+
+    private void initializeMedPacks(){
+        for(int i = 1; i < 4; i++){
+            for(int j = 1; j < 4; j++){
+                MedPack medPack = new MedPack(i*200, j*190);
+                gameEnvironment.addMedPack(medPack);
+            }
+        }
     }
 
 

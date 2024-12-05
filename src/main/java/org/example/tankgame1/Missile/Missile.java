@@ -6,10 +6,10 @@ import org.example.tankgame1.Environment.Explosion.Explosion;
 import org.example.tankgame1.Environment.Explosion.ExplosionFactory;
 import org.example.tankgame1.Environment.GameEnvironment;
 import org.example.tankgame1.Environment.Wall.Wall;
+import org.example.tankgame1.Missile.StrategyPattern.*;
 import org.example.tankgame1.Tank.Tank;
 
 public class Missile {
-    private final double SPEED = 10;
     private boolean isActive;
     private double xPos, yPos;
     private final ImageView imageView;
@@ -50,6 +50,7 @@ public class Missile {
         }
 
         double[] pos = {xPos, yPos};
+        double SPEED = 10;
         strategy.updatePosition(SPEED, pos);
         xPos = pos[0];
         yPos = pos[1];
@@ -67,7 +68,6 @@ public class Missile {
         imageView.setY(yPos);
     }
 
-    // Maybe combine collisions??????
     // Return true if a missile collides with a wall, else false
     private boolean checkCollisionWithWall(){
         Rectangle missileBounds = new Rectangle(xPos, yPos, imageView.getFitWidth(), imageView.getFitHeight());

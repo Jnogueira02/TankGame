@@ -2,6 +2,7 @@ package org.example.tankgame1.Missile;
 
 import org.example.tankgame1.Tank.Tank;
 
+// Singleton Class
 public class MissileFactory {
 
     private static MissileFactory instance;

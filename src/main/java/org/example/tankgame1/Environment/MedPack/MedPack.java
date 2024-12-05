@@ -23,6 +23,7 @@ public class MedPack {
         initializeImage();
     }
 
+    // Initialize the MedPack image
     private void initializeImage() {
         imageView = imageViewFactory.createImageView("/images/medpack.png", xPos, yPos, width, height);
     }

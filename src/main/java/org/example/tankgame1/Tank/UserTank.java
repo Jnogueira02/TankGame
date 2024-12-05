@@ -6,6 +6,7 @@ import org.example.tankgame1.ObserverPattern.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
+// UserTank implements observable to update healthbar
 public class UserTank extends Tank implements Observable {
     private final List<Observer> observers = new ArrayList<>();
     public UserTank(double xPos, double yPos) {

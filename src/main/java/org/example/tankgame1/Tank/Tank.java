@@ -64,6 +64,7 @@ public abstract class Tank {
         return gameEnvironment.getUserTank();
     }
 
+    // Move tank up
     public void moveUp(){
         double newY = yPos - SPEED;
         if((yPos > 0) && (checkWallCollision(xPos, newY))) {
@@ -76,6 +77,7 @@ public abstract class Tank {
         checkMedPackCollision(xPos, yPos);
     }
 
+    // Move tank down
     public void moveDown(){
         double newY = yPos + SPEED;
         if((yPos < 390) && (checkWallCollision(xPos, newY))) {
@@ -88,6 +90,7 @@ public abstract class Tank {
         checkMedPackCollision(xPos, yPos);
     }
 
+    // Move tank left
     public void moveLeft(){
         double newX = xPos - SPEED;
         if((xPos > 0) && (checkWallCollision(newX, yPos))) {
@@ -100,6 +103,7 @@ public abstract class Tank {
         checkMedPackCollision(xPos, yPos);
     }
 
+    // Move tank right
     public void moveRight(){
         double newX = xPos + SPEED;
         if((xPos < 740) && (checkWallCollision(newX, yPos))) {
@@ -118,6 +122,7 @@ public abstract class Tank {
         imageView.setY(yPos);
     }
 
+    // Check tank collision with wall
     public boolean checkWallCollision(double newX, double newY) {
         Rectangle tankBounds = new Rectangle(newX, newY, imageView.getFitWidth(), imageView.getFitHeight());
         for(Wall wall : gameEnvironment.getWalls()) {
@@ -129,6 +134,7 @@ public abstract class Tank {
         return true;
     }
 
+    // Check tank collision with MedPack
     public void checkMedPackCollision(double newX, double newY){
         Rectangle tankBounds = new Rectangle(newX, newY, width, height);
         for(MedPack medPack : gameEnvironment.getMedPacks()){
@@ -148,15 +154,11 @@ public abstract class Tank {
             destroy();
     }
 
+    // Add health to tank
     public void repair(){
         if (health < 3)
             health++;
     }
-
-    public void setHealth(double health){
-        this.health = health;
-    }
-
 
     // Destroy tank
     private void destroy(){
