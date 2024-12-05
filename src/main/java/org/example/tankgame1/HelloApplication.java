@@ -26,17 +26,18 @@ import java.util.List;
 public class HelloApplication extends Application {
     private MissileFactory missileFactory;
     private final WallFactory wallFactory = new WallFactory();
+    private TankFactory tankFactory;
     private final List<Wall> walls = new ArrayList<>();
-    private Label enemyCount;
-    private List<EnemyTank> enemyTanks;
+    private List<EnemyTank> enemyTanks = new ArrayList<>();
     private UserTank userTank;
     private HealthBar healthBar;
+    private GameEnvironment gameEnvironment;
+    private final Pane gameArena = new Pane();
 
     @Override
     public void start(Stage stage) throws IOException {
         BorderPane root = new BorderPane();
 
-        Pane gameArena = new Pane();
         gameArena.setPrefSize(800, 400);
         gameArena.setStyle("-fx-background-color: darkseagreen;");
         root.setCenter(gameArena);
@@ -45,9 +46,10 @@ public class HelloApplication extends Application {
         healthBar = new HealthBar();
 
         // Initialize enemy count
-        enemyCount = new Label();
-//        updateEnemyCount();
-        root.setBottom(enemyCount);
+        Label enemyCountLabel = new Label("Enemies: 6");
+        root.setBottom(enemyCountLabel);
+
+        new EnemyCountDisplay(enemyCountLabel);
 
         // Create walls
         walls.add(wallFactory.createWall(100, 45, 8, 100));
@@ -55,7 +57,7 @@ public class HelloApplication extends Application {
         walls.forEach(wall -> gameArena.getChildren().add(wall.getRectangle()));
 
         // Create user tank
-        TankFactory tankFactory = TankFactory.getInstance();
+        tankFactory = TankFactory.getInstance();
         userTank = (UserTank) tankFactory.createTank(TankType.USER,180, 150);
         gameArena.getChildren().add(userTank.getImageView()); // REFACTOR WITH GAME_ENVIRONMENT???
         userTank.addObserver(healthBar);
@@ -66,18 +68,20 @@ public class HelloApplication extends Application {
 
         // Initialize the game environment
         GameEnvironment.getInstance().initialize(walls, gameArena, userTank);
-        GameEnvironment gameEnvironment = GameEnvironment.getInstance();
+        gameEnvironment = GameEnvironment.getInstance();
 
         // Create the enemy tanks and add them to a list
-        EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
+        /*EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
         gameArena.getChildren().add(enemyTank1.getImageView());
-        enemyTanks = new ArrayList<>();
         enemyTanks.add(enemyTank1);
-        gameEnvironment.addEnemyTanks(enemyTanks);
+        gameEnvironment.addEnemyTanks(enemyTanks);*/
+
+        initializeEnemyTanks();
 
         // Add list of tanks to the game environment
         List<Tank> tanks = new ArrayList<>();
-        Collections.addAll(tanks, userTank, enemyTank1);
+        tanks.add(userTank);
+        tanks.addAll(enemyTanks);
         gameEnvironment.addTanks(tanks);
 
         // Add MedPacks
@@ -131,6 +135,16 @@ public class HelloApplication extends Application {
                 missileTimer.start();
             }
         }
+    }
+    private void initializeEnemyTanks(){
+        for(double i = 0; i < 750; i+=250){
+            for(double j = 0; j < 350; j+=175){
+                EnemyTank enemyTank = (EnemyTank) tankFactory.createTank(TankType.ENEMY, i, j);
+                gameArena.getChildren().add(enemyTank.getImageView());
+                enemyTanks.add(enemyTank);
+            }
+        }
+        gameEnvironment.addEnemyTanks(enemyTanks);
     }
 
 

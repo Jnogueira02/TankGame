@@ -164,6 +164,7 @@ public abstract class Tank {
         gameEnvironment.removeTank(this);
         if(this instanceof EnemyTank){
             gameEnvironment.removeEnemyTank((EnemyTank) this);
+            gameEnvironment.notifyObservers();
         }
     }
 
