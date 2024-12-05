@@ -23,6 +23,7 @@ public class GameEnvironment implements Observable {
     private UserTank userTank;
     private List<Tank> tanks;
     private List<EnemyTank> enemyTanks;
+    private List<Observer> observers = new ArrayList<>();
     private final List<Missile> activeMissiles = new ArrayList<>();
     private final List<MedPack> medPacks = new ArrayList<>();
     private static GameEnvironment instance;
@@ -117,16 +118,24 @@ public class GameEnvironment implements Observable {
 
     @Override
     public void addObserver(Observer observer) {
-
+        if(!observers.contains(observer)){
+            observers.add(observer);
+        }
     }
 
     @Override
     public void removeObserver(Observer observer) {
-
+        observers.remove(observer);
     }
 
     @Override
     public void notifyObservers() {
+        for(Observer observer : observers){
+            observer.update(0);
+        }
+    }
 
+    public int getEnemyCount() {
+        return enemyTanks.size();
     }
 }
