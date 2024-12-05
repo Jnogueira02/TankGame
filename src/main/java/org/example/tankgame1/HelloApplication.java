@@ -21,6 +21,7 @@ import org.example.tankgame1.Tank.Health.HealthBar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class HelloApplication extends Application {
@@ -93,11 +94,13 @@ public class HelloApplication extends Application {
         AnimationTimer gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                for(EnemyTank enemyTank: enemyTanks) {
+                Iterator<EnemyTank> enemyTankIterator = enemyTanks.iterator();
+                while (enemyTankIterator.hasNext()) {
+                    EnemyTank enemyTank = enemyTankIterator.next();
                     enemyTank.move();
                     enemyTank.attemptToShoot();
-                    gameEnvironment.updateMissiles();
                 }
+                gameEnvironment.updateMissiles(); // Ensure this method is also safely handling modifications
             }
         };
         gameLoop.start();
