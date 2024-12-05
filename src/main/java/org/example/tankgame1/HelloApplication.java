@@ -26,7 +26,7 @@ import java.util.List;
 
 public class HelloApplication extends Application {
     private MissileFactory missileFactory;
-    private final WallFactory wallFactory = new WallFactory();
+    private WallFactory wallFactory;
     private TankFactory tankFactory;
     private final List<Wall> walls = new ArrayList<>();
     private List<EnemyTank> enemyTanks = new ArrayList<>();
@@ -53,9 +53,11 @@ public class HelloApplication extends Application {
         new EnemyCountDisplay(enemyCountLabel);
 
         // Create walls
-        walls.add(wallFactory.createWall(100, 45, 8, 100));
+        wallFactory = WallFactory.getInstance();
+        initializeWalls();
+        /*walls.add(wallFactory.createWall(100, 45, 8, 100));
         walls.add(wallFactory.createWall(230, 50, 100, 8));
-        walls.forEach(wall -> gameArena.getChildren().add(wall.getRectangle()));
+        walls.forEach(wall -> gameArena.getChildren().add(wall.getRectangle()));*/
 
         // Create user tank
         tankFactory = TankFactory.getInstance();
@@ -71,12 +73,7 @@ public class HelloApplication extends Application {
         GameEnvironment.getInstance().initialize(walls, gameArena, userTank);
         gameEnvironment = GameEnvironment.getInstance();
 
-        // Create the enemy tanks and add them to a list
-        /*EnemyTank enemyTank1 = (EnemyTank) tankFactory.createTank(TankType.ENEMY, 0, 0);
-        gameArena.getChildren().add(enemyTank1.getImageView());
-        enemyTanks.add(enemyTank1);
-        gameEnvironment.addEnemyTanks(enemyTanks);*/
-
+        // Initialize enemy tanks
         initializeEnemyTanks();
 
         // Add list of tanks to the game environment
@@ -140,14 +137,36 @@ public class HelloApplication extends Application {
         }
     }
     private void initializeEnemyTanks(){
-        for(double i = 0; i < 750; i+=250){
+        for(double i = 0; i < 750; i+=374){
             for(double j = 0; j < 350; j+=175){
                 EnemyTank enemyTank = (EnemyTank) tankFactory.createTank(TankType.ENEMY, i, j);
                 gameArena.getChildren().add(enemyTank.getImageView());
                 enemyTanks.add(enemyTank);
             }
         }
+
         gameEnvironment.addEnemyTanks(enemyTanks);
+    }
+
+    private void initializeWalls(){
+        walls.add(wallFactory.createWall(100, 45, 8, 100));
+        walls.add(wallFactory.createWall(300, 205, 8, 100));
+        walls.add(wallFactory.createWall(400, 100, 8, 100));
+        walls.add(wallFactory.createWall(250, 300, 8, 100));
+        walls.add(wallFactory.createWall(200, 45, 8, 100));
+        walls.add(wallFactory.createWall(600, 205, 8, 100));
+        walls.add(wallFactory.createWall(800, 100, 8, 100));
+        walls.add(wallFactory.createWall(500, 300, 8, 100));
+
+        walls.add(wallFactory.createWall(230, 50, 100, 8));
+        walls.add(wallFactory.createWall(100, 250, 100, 8));
+        walls.add(wallFactory.createWall(400, 130, 100, 8));
+        walls.add(wallFactory.createWall(300, 400, 100, 8));
+        walls.add(wallFactory.createWall(460, 50, 100, 8));
+        walls.add(wallFactory.createWall(200, 250, 100, 8));
+        walls.add(wallFactory.createWall(800, 130, 100, 8));
+        walls.add(wallFactory.createWall(600, 400, 100, 8));
+        walls.forEach(wall -> gameArena.getChildren().add(wall.getRectangle()));
     }
 
 
